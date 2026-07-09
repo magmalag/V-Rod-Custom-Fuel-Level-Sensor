@@ -31,5 +31,38 @@ The V-Rod fuel tank has a complex, irregular shape. To ensure absolute accuracy 
 <img src="photos/schematic.png" width="600">
 
 ## Source Code
-The firmware is written in Arduino IDE. It features heavy digital filtering (exponential moving average) to prevent gauge needle bouncing when fuel sloshes during riding.
+Developed for the Harley-Davidson V-Rod, which has a complex-shaped under-seat fuel tank causing standard sensors to read highly non-linearly.
+
+This code converts the non-linear resistance signal from the fuel float into a perfectly smooth PWM signal for an analog gauge, distributing the fuel volume evenly across the gauge marks (Empty, 1/4, 1/2, 3/4, Full).
+
+## 🚀 Features
+* **Anti-Slosh Logic:** Dual signal filtering (Median filter + Smoothing/Low-pass filter). The needle won't jump during braking, acceleration, or cornering.
+* **Custom Tank Calibration:** A 33-point lookup table allows perfect volume mapping for a fuel tank of any geometric shape.
+* **System Voltage Compensation:** Sensor readings remain accurate even during voltage drops (e.g., turning on headlights or radiator fans), as the Arduino monitors the battery voltage and dynamically compensates the PWM output.
+* **Gauge Calibration Mode:** Built-in `CALIBRATION_MODE` to quickly find the exact PWM values needed for your specific aftermarket gauge.
+
+## 🛠 Hardware & Wiring
+* **Microcontroller:** Arduino Nano / Pro Mini (or any compatible board).
+* **Sensor Input:** `A1` *(A pull-up resistor is required depending on your specific sender's resistance).*
+* **Battery Voltage Monitor:** `A4` ⚠️ **WARNING:** Must be connected via a voltage divider! Motorcycle system voltage can reach 14.5V+, which will fry the Arduino pin if connected directly.
+* **Gauge Output:** `D10` *(PWM output to the gauge).*
+
+## 📐 Calibration Guide
+
+If you are adapting this project for a different motorcycle or fuel tank, you need to complete a 2-step calibration process:
+
+### Step 1: Gauge Needle Calibration
+1. Set `bool CALIBRATION_MODE = true;` at the beginning of the code.
+2. Change the `TEST_PWM` value, upload the code, and observe where the needle stops on the gauge.
+3. Find the exact PWM values for your gauge marks (Empty, 1/4, 1/2, 3/4, Full) and write them into the `gPWM[]` array.
+4. In the `gLiters[]` array, define how many liters each mark represents (e.g., for a 20.5L tank, the step for each 1/8 increment would be 2.5L).
+
+### Step 2: Fuel Tank Mapping
+1. Set `CALIBRATION_MODE = false;`.
+2. Completely drain the fuel tank. Open the Arduino IDE Serial Monitor at 115200 baud.
+3. Record the `Raw_Sensor` value for the empty tank.
+4. Pour fuel into the tank in small, measured portions (e.g., 1 liter at a time) and record the `Raw_Sensor` readings for each step.
+5. Transfer these "ADC - Liters" pairs into the `rawTable[]` and `litersTable[]` arrays. 
+*Important: The arrays must be strictly ascending, with no duplicate ADC values in a row!*
+
 
