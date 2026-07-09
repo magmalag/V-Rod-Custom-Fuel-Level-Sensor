@@ -12,13 +12,15 @@ The OEM ultrasonic sensor is prone to failure due to vibrations, temperature cha
 This project replaces the ultrasonic unit with a highly reliable **magnetic reed-switch array**, processed by an **Atmega328 microcontroller**. It provides a perfectly stable analog signal (current sink) to the instrument cluster, perfectly mimicking a working OEM sensor.
 
 ### Hardware Features
-! (photos/IMG_20260620_183127.jpg)
+<img src="photos/IMG_20260620_183127.jpg" width="600">
 * **Sensor Probe:** Aluminum tube housing an array of 40 reed switches and resistors.
-! (photos/IMG_20260610_010121.jpg)
-! (photos/IMG_20260610_010118.jpg)
-! (photos/IMG_20260610_010407.jpg)
+<img src="photos/IMG_20260610_010121.jpg" width="600">
+
+<img src="photos/IMG_20260610_010118.jpg" width="600">
+
+<img src="photos/IMG_20260610_010407.jpg" width="600">
 * **Float:** Custom-shaped fuel-resistant float with embedded neodymium magnets.
-! (photos/IMG_20260617_225749.jpg)
+<img src="photos/IMG_20260617_225749.jpg" width="600">
 * **Microcontroller:** Arduino NANO Super Mini Atmega328.
 * **Signal Output:** Custom transistor-based circuit (AO3400A) providing a stable current sink for the dashboard, regardless of alternator voltage spikes.
 
