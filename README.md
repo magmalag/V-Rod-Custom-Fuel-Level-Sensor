@@ -28,7 +28,7 @@ This project replaces the ultrasonic unit with a highly reliable **magnetic reed
 The V-Rod fuel tank has a complex, irregular shape. To ensure absolute accuracy (including the "Miles to Empty" range calculator), the sensor was mapped by filling the tank liter by liter with actual fuel.
 
 ## Schematic & PCB
-<img src="photos/schematic.png.png" width="600">
+<img src="photos/schematic.png" width="600">
 
 ## Source Code
 The firmware is written in Arduino IDE. It features heavy digital filtering (exponential moving average) to prevent gauge needle bouncing when fuel sloshes during riding.
