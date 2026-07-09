@@ -13,16 +13,16 @@ This project replaces the ultrasonic unit with a highly reliable **magnetic reed
 
 ### Hardware Features
 <img src="photos/IMG_20260620_183127.jpg" width="600">
-* **Sensor Probe:** Aluminum tube housing an array of 40 reed switches and resistors.
+- **Sensor Probe:** Aluminum tube housing an array of 40 reed switches and resistors.
 <img src="photos/IMG_20260610_010121.jpg" width="600">
 
 <img src="photos/IMG_20260610_010118.jpg" width="600">
 
 <img src="photos/IMG_20260610_010407.jpg" width="600">
-* **Float:** Custom-shaped fuel-resistant float with embedded neodymium magnets.
+- **Float:** Custom-shaped fuel-resistant float with embedded neodymium magnets.
 <img src="photos/IMG_20260617_225749.jpg" width="600">
-* **Microcontroller:** Arduino NANO Super Mini Atmega328.
-* **Signal Output:** Custom transistor-based circuit (AO3400A) providing a stable current sink for the dashboard, regardless of alternator voltage spikes.
+- **Microcontroller:** Arduino NANO Super Mini Atmega328.
+- **Signal Output:** Custom transistor-based circuit (AO3400A) providing a stable current sink for the dashboard, regardless of alternator voltage spikes.
 
 ## Tank Calibration
 The V-Rod fuel tank has a complex, irregular shape. To ensure absolute accuracy (including the "Miles to Empty" range calculator), the sensor was mapped by filling the tank liter by liter with actual fuel.
