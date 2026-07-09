@@ -1,10 +1,6 @@
 # V-Rod-Custom-Fuel-Level-Sensor
 A custom DIY microcontroller-based (Arduino NANO Super Mini Atmega328) fuel level sensor for Harley-Davidson V-Rod. Replaces the unreliable factory ultrasonic sensor with a magnetic reed-switch array.
 
-# Harley-Davidson V-Rod Custom Fuel Level Sensor
-
-This project is a complete DIY replacement for the notoriously unreliable factory ultrasonic fuel level sensor found on Harley-Davidson V-Rod motorcycles. 
-
 ## The Problem
 The OEM ultrasonic sensor is prone to failure due to vibrations, temperature changes, and piezo-element degradation. When it fails, the fuel gauge typically shows "Full" or drops to zero randomly.
 
@@ -19,10 +15,17 @@ This project replaces the ultrasonic unit with a highly reliable **magnetic reed
 <img src="photos/IMG_20260610_010118.jpg" width="600">
 
 <img src="photos/IMG_20260610_010407.jpg" width="600">
-- **Float:** Custom-shaped fuel-resistant float with embedded neodymium magnets.
+- **The Float (PVC-2-195):** The float is custom-machined from **ПХВ-2-195 (PVC-2-195)** — an aviation-grade, closed-cell polyvinyl chloride foam. Unlike regular plastics or foams, it is 100% resistant to high-octane gasoline and ethanol blends, never absorbs fuel, and securely holds the dual neodymium magnets.
 <img src="photos/IMG_20260617_225749.jpg" width="600">
+
 - **Microcontroller:** Arduino NANO Super Mini Atmega328.
-- **Signal Output:** Custom transistor-based circuit (AO3400A) providing a stable current sink for the dashboard, regardless of alternator voltage spikes.
+
+- **The Active Feedback Loop (LM358 + AO3400A):** 
+This is the heart of the hardware. Simply using a PWM-driven transistor to ground the signal wire causes gauge needle bounce due to alternator voltage spikes (ranging from 12.5V at idle to 14.4V while riding). To solve this, the project utilizes a combination of a hardware constant current sink and dynamic software compensation:
+
+1. **Hardware Constant Current Sink:** The Arduino Nano outputs a high-frequency PWM signal, which is smoothed into a stable DC reference voltage using an RC filter. This reference voltage is fed into the non-inverting input of the LM358 operational amplifier. Operating in a closed-loop feedback configuration with the AO3400A N-channel MOSFET and a source sense resistor, the LM358 continuously regulates the MOSFET's gate voltage. This ensures a precise, steady current draw (ranging from 12 mA to 20 mA) from the instrument cluster, shielding the signal from rapid electrical noise on the line.
+
+2. **Dynamic Voltage Compensation:** Although the constant current sink stabilizes the output, fluctuations in the motorcycle's overall system voltage (12.5V to 14.4V) can still slightly affect the cluster's internal current-sensing behavior. To address this, the Arduino Nano monitors the system voltage via a resistor voltage divider connected to an analog pin. The firmware measures this voltage in real-time and dynamically adjusts the PWM duty cycle to compensate for these system-wide variations, keeping the gauge needle stable and consistent under all riding conditions.
 
 ## Tank Calibration
 The V-Rod fuel tank has a complex, irregular shape. To ensure absolute accuracy (including the "Miles to Empty" range calculator), the sensor was mapped by filling the tank liter by liter with actual fuel.
